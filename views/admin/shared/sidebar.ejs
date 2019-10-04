@@ -1,0 +1,23 @@
+<section id='sidebar'>
+    <ul id='dock'>
+        <li class='<% if(page=="index") { %> active <% } %> launcher'>
+        <i class='icon-dashboard'></i>
+        <a href="/admin">Dashboard</a>
+        </li>
+        <li class='<% if(page=="student") { %> active <% } %> launcher'>
+        <i class='icon-file-text-alt'></i>
+        <a href="/admin/student">Students</a>
+        </li>
+        <li class='<% if(page=="course") { %> active <% } %> launcher'>
+        <i class='icon-table'></i>
+        <a href="/admin/course">Course</a>
+        </li>
+
+        <li class='<% if(page=="report") { %> active <% } %> launcher'>
+        <i class='icon-flag'></i>
+        <a href='/admin/report'>Reports</a>
+        </li>
+        
+    </ul>
+    <div data-toggle='tooltip' id='beaker' title='Made by lab2023'></div>
+</section>

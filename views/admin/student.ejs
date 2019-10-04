@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html class='no-js' lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+    <title>Dashboard</title>
+    <link href="/css/application-a07755f5.css" rel="stylesheet" type="text/css" />
+    <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    
+  </head>
+  <body class='main page'>
+      <!-- Navbar -->
+      <% include shared/header.ejs %>
+      <!-- Sidebar -->
+      <% include shared/sidebar.ejs %>
+      <!-- Tools -->
+      <section id='tools'>
+        <ul class='breadcrumb' id='breadcrumb'>
+          <li class='title'>Student List</li>
+          <li><a href="/admin/student/import">Import</a></li>
+        </ul>
+        <div id='toolbar'>
+          <div class='btn-group'>
+            <a class='btn' data-toggle='toolbar-tooltip' href='#' title='Building'>
+              <i class='icon-building'></i>
+            </a>
+            <a class='btn' data-toggle='toolbar-tooltip' href='#' title='Laptop'>
+              <i class='icon-laptop'></i>
+            </a>
+            <a class='btn' data-toggle='toolbar-tooltip' href='#' title='Calendar'>
+              <i class='icon-calendar'></i>
+              <span class='badge'>3</span>
+            </a>
+            <a class='btn' data-toggle='toolbar-tooltip' href='#' title='Lemon'>
+              <i class='icon-lemon'></i>
+            </a>
+          </div>
+        
+        </div>
+      </section>
+      <!-- Content -->
+      <div id='content'>
+        <div class='panel panel-default'>
+          <div class='panel-heading'>
+            Student List
+          </div>
+          <div class='panel-body'>
+            <table id="table" class="display" cellspacing="0" width="100%">
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Grade</th>    
+                      <th>Initial Password</th>  
+                      <th></th>
+                  </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
+          </table>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  	<script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#table').DataTable({
+          columns: [
+              { data: 'sid' },
+              { data: 'name' },
+              { data: 'grade' },
+              { data: 'password' },
+              { data: null,"render":function(data,type,row,meta){
+                var html="<input type='button' class='btn btn-primary' value='Edit' onclick='location=\"./../student/"+row.sid+ "\"'/>";
+
+                return html;
+              }}
+          ],
+          ajax: {
+            "url":'/student',
+            "dataSrc": "results"
+          }
+        });
+
+
+      });
+    </script>
+
+ 
+  </body>
+</html>

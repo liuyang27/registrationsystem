@@ -1,0 +1,19 @@
+{
+  "name": "registrationsystem",
+  "version": "1.0.0",
+  "description": "elective course registration system, NodeJS+Express+Mongoose+Ejs+Jquery+Bootstrap",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Liu Yang",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "formidable": "^1.2.1",
+    "mongoose": "^5.7.3",
+    "node-xlsx": "^0.15.0"
+  }
+}
