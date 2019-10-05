@@ -19,17 +19,20 @@ app.set("view engine","ejs");
 
 
 app.get("/admin",adminCtrl.showAdminDashboard);
-
 app.get ("/admin/student",          adminCtrl.showAdminStudent);
 app.get ("/admin/student/import",   adminCtrl.showAdminStudentImport);
 app.post("/admin/student/import",   adminCtrl.doAdminStudentImport);
 app.get("/admin/course",            adminCtrl.showAdminCourse);
 app.get("/admin/report",            adminCtrl.showAdminReport);
 
-app.get ("/student",          adminCtrl.getAllStudents);
-app.get ("/student/add",          adminCtrl.showAddStudent);
+app.get ("/student",                adminCtrl.getAllStudents);
+app.get ("/student/add",            adminCtrl.showAddStudent);
+app.post ("/student/add",           adminCtrl.doAddStudent);
 app.post ("/student/:sid",          adminCtrl.updateStudent);
-app.get ("/student/:sid",          adminCtrl.showEditStudent);
+app.get ("/student/:sid",           adminCtrl.showEditStudent);
+app.put ("/student/:sid",           adminCtrl.doCheckId);
+app.delete ("/student/:sid",        adminCtrl.deleteStudent);
+
 
 app.use(express.static("public"));
 

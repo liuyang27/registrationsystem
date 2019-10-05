@@ -62,8 +62,8 @@ exports.doAdminStudentImport=function(req,res){
         var workSheetsFromFile=xlsx.parse('./'+files.studentexcel.path);
         for(var i=0;i<workSheetsFromFile.length;i++){
             if(
-                workSheetsFromFile[0].data[0][0]!="ID" ||
-                workSheetsFromFile[0].data[0][1]!="Name"
+                workSheetsFromFile[i].data[0][0]!="ID" ||
+                workSheetsFromFile[i].data[0][1]!="Name"
                 ){
                     res.send("excel form hearder not correct,please check.");
                     return;
@@ -88,8 +88,34 @@ exports.getAllStudents=function(req,res){
 }
 
 exports.updateStudent=function(req,res){
-    
+    var sid=req.params.sid;
+	if(!sid){
+		return;
+    }
+    var form = new formidable.IncomingForm();
+	form.parse(req, function(err, fields, files) {
+
+		Student.find({"sid":sid},function(err,results){
+			if(results.length==0){
+				res.json({"results":-1});
+				return;
+			}
+
+            var s =results[0];
+			s.name=fields.name;
+			s.grade=fields.grade;
+			s.password=fields.password;
+			s.save(function(err){
+				if(err){
+					res.json({"results":-1});
+				}else{
+					res.json({"results":1});
+				}
+			});
+		})
+	})
 }
+
 exports.showEditStudent=function(req,res){
     var sid =parseInt(req.params.sid);
 
@@ -107,7 +133,47 @@ exports.showEditStudent=function(req,res){
 
 
 exports.showAddStudent=function(req,res){
+    res.render('admin/student/add',{
+        page:"student"
+    });
+}
+
+
+exports.doCheckId=function(req,res){
+    var sid=req.params.sid;
+	Student.checkSid(sid,function(results){
+		res.json({"results":results});
+    })
     
 }
+
+
+exports.doAddStudent=function(req,res){
+	var form = new formidable.IncomingForm();
+	form.parse(req, function(err, fields, files) {
+        console.log("aaaaaaaaaaa");
+		Student.addStudent(fields,function(results){
+			res.json({"results":results});
+		});	
+	})
+}
+
+exports.deleteStudent=function(req,res){
+    var sid=req.params.sid;
+    Student.find({"sid":sid},function(err,results){
+		if(err || results.length==0){
+			res.json({"results":-1});
+			return;
+		}
+		results[0].remove(function(err){
+			if(err){
+				res.json({"results":-1});
+				return;
+			}
+			res.json({"results":1});
+		})
+	})
+}
+
 
 

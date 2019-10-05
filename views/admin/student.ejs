@@ -44,7 +44,7 @@
       <div id='content'>
         <div class='panel panel-default'>
           <div class='panel-heading'>
-            Student List
+            Student List <input type='button' class='btn btn-primary' value="Add New" style="margin-left: 50px" onclick="location='/student/add'"/>
           </div>
           <div class='panel-body'>
             <table id="table" class="display" cellspacing="0" width="100%">
@@ -79,7 +79,7 @@
               { data: 'password' },
               { data: null,"render":function(data,type,row,meta){
                 var html="<input type='button' class='btn btn-primary' value='Edit' onclick='location=\"./../student/"+row.sid+ "\"'/>";
-
+                html += " <input type='button' class='btn btn-danger'  data-sid=" + row.sid + " value='Delete' id='deletebtn' />"
                 return html;
               }}
           ],
@@ -88,9 +88,31 @@
             "dataSrc": "results"
           }
         });
-
-
       });
+
+    
+      $('#table').on("click","#deletebtn",function(){
+        if(!confirm("delete??")){
+            return;
+        }
+
+        var sid=$(this).attr("data-sid");
+        $this=$(this);
+        $.ajax({
+            url : "/student/"+sid,
+            type: "delete",
+            success:function(data){
+                if(data.results==-1){
+                    alert("delete err..");
+                }else{
+                    alert("deleted ok..");
+                    window.location="/admin/student";
+                }
+            }
+        })
+
+
+      })
     </script>
 
  
