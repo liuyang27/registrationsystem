@@ -15,6 +15,7 @@ exports.doLogin=function(req,res){
         } 
         var sid = fields.sid;
         var password = fields.password;
+
         Student.find({"sid":sid},function(err,results){
             if(err){
                 res.json({"results":-1});
@@ -24,10 +25,10 @@ exports.doLogin=function(req,res){
                 res.json({"results":-2});
                 return;
             } 
-
-            var changedpwd = results[0].initpwd;
-            if(!changedpwd){
+            var initpwd = results[0].initpwd;
+            if(initpwd){
                 if(results[0].password==password){
+                    req.session.login=true;
                     res.json({"results":1});
                     return;
                 }else{
@@ -39,4 +40,12 @@ exports.doLogin=function(req,res){
             }
         })
     })
+}
+
+exports.showTable=function(req,res){
+    if(req.session.login != true){
+        res.redirect("/login");
+        return;
+    }
+    res.send("this is registration form...");
 }

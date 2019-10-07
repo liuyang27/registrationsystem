@@ -44,7 +44,21 @@
               sid:sid,
               password:pwd
           },function(data){
-              console.log(data.results);
+              if(data.results==1){
+                alert("login ok");
+                window.location="/";
+              }else if(data.results==-2){
+                alert("user does not exist..");
+                $('#username').val('');
+                $('#password').val('');
+              }else if(data.results==-3){
+                alert("password wrong..");
+                $('#password').val('');
+              }else{
+                alert("something wrong..");
+                $('#password').val('');
+              }
+              
           })
       })
     </script>

@@ -50,7 +50,7 @@ app.delete ("/course/:sid",         adminCourseCtrl.deleteCourse);
 
 app.get ("/login",                  mainCtrl.showLogin);
 app.post ("/login",                 mainCtrl.doLogin);
-
+app.get ("/",                       mainCtrl.showTable);
 app.use(express.static("public"));
 
 app.use(function(req,res){
