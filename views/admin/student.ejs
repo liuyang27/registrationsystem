@@ -8,7 +8,7 @@
     <link href="/css/application-a07755f5.css" rel="stylesheet" type="text/css" />
     <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
-    
+    <link href="/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
   </head>
   <body class='main page'>
       <!-- Navbar -->
@@ -69,9 +69,16 @@
   	<script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="/js/jszip.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function() {
-        $('#table').DataTable({
+        $('#table').DataTable({ 
+          dom: 'Bfrtip',
+          buttons: [
+              'csvHtml5', 'excelHtml5', 'pdfHtml5',
+          ],
           columns: [
               { data: 'sid' },
               { data: 'name' },

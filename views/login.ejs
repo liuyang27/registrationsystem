@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html class='no-js' lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+    <title>Login</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style=" background: url(/images/loginbackground.jpg) no-repeat center center fixed; background-size: 100%;">
+ 
+ 
+    <div class="modal-dialog" style="margin-top: 10%;">
+        <div class="modal-content">
+            <div class="modal-header">
+ 
+                <h4 class="modal-title text-center" id="myModalLabel">Login</h4>
+            </div>
+            <div class="modal-body" id = "model-body">
+                <div class="form-group">
+ 
+                    <input type="text" class="form-control"placeholder="User name" id="username" autocomplete="off">
+                </div>
+                <div class="form-group">
+ 
+                    <input type="password" class="form-control" placeholder="password"  id="password" autocomplete="off">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn">Login</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      $('#btn').click(function(){
+          var sid=$('#username').val();
+          var pwd=$('#password').val();
+
+          $.post("/login",{
+              sid:sid,
+              password:pwd
+          },function(data){
+              console.log(data.results);
+          })
+      })
+    </script>
+</body>
+</html>

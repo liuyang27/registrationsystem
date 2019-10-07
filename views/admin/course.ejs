@@ -7,7 +7,8 @@
     <title>Dashboard</title>
     <link href="/css/application-a07755f5.css" rel="stylesheet" type="text/css" />
     <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-
+    <link href="/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
     
   </head>
   <body class='main page'>
@@ -18,9 +19,8 @@
       <!-- Tools -->
       <section id='tools'>
         <ul class='breadcrumb' id='breadcrumb'>
-          <li class='title'>Dashboard</li>
-          <li><a href="#">Lorem</a></li>
-          <li class='active'><a href="#">ipsum</a></li>
+          <li class='title'>CourseList</li>
+          <li><a href="/admin/course/import">Import</a></li>
         </ul>
         <div id='toolbar'>
           <div class='btn-group'>
@@ -45,19 +45,87 @@
       <div id='content'>
         <div class='panel panel-default'>
           <div class='panel-heading'>
-            Hierapolis Rocks!
-            <div class='panel-tools'>
-              
-            </div>
+            Course List <input type='button' class='btn btn-primary' value="Add New" style="margin-left: 50px" onclick="location='/course/add'"/>
           </div>
           <div class='panel-body'>
-            
+            <table id="table" class="display" cellspacing="0" width="100%">
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>DayOfWeek</th>    
+                      <th>Number</th>  
+                      <th>Allow</th> 
+                      <th>Teacher</th> 
+                      <th>Introduction</th> 
+                      <th></th>
+                  </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
+          </table>
             
           </div>
         </div>
       </div>
     </div>
   	<script type="text/javascript" src="/js/jquery.min.js"></script>
-		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="/js/jszip.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#table').DataTable({ 
+          dom: 'Bfrtip',
+          buttons: [
+              'csvHtml5', 'excelHtml5', 'pdfHtml5',
+          ],
+          columns: [
+              { data: 'cid' },
+              { data: 'name' },
+              { data: 'dayofweek' },
+              { data: 'number' },
+              { data: 'allow' },
+              { data: 'teacher' },
+              { data: 'briefintro' },
+              { data: null,"render":function(data,type,row,meta){
+                var html="<input type='button' class='btn btn-primary' value='Edit' onclick='location=\"../course/"+row.cid+ "\"'/>";
+                html += " <input type='button' class='btn btn-danger'  data-sid=" + row.cid + " value='Delete' id='deletebtn' />"
+                return html;
+              }}
+          ],
+          ajax: {
+            "url":'/course',
+            "dataSrc": "results"
+          }
+        });
+      });
+
+    
+      $('#table').on("click","#deletebtn",function(){
+        if(!confirm("delete this course??")){
+            return;
+        }
+
+        var sid=$(this).attr("data-sid");
+        $this=$(this);
+        $.ajax({
+            url : "/course/"+sid,
+            type: "delete",
+            success:function(data){
+                if(data.results==-1){
+                    alert("delete err..");
+                }else{
+                    alert("deleted ok..");
+                    window.location="/admin/course";
+                }
+            }
+        })
+
+      })
+    </script>
   </body>
 </html>

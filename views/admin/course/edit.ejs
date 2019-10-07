@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class='no-js' lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+    <title>Dashboard</title>
+    <link href="/css/application-a07755f5.css" rel="stylesheet" type="text/css" />
+    <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+    
+  </head>
+  <body class='main page'>
+      <!-- Navbar -->
+      <% include ../shared/header.ejs %>
+      <!-- Sidebar -->
+      <% include ../shared/sidebar.ejs %>
+      <!-- Tools -->
+      <section id='tools'>
+        <ul class='breadcrumb' id='breadcrumb'>
+            <li class='title'>Course List</li>
+            <li><a href="/admin/course/import">Import</a></li>
+        </ul>
+        <div id='toolbar'>
+          <div class='btn-group'>
+            <a class='btn' data-toggle='toolbar-tooltip' href='#' title='Building'>
+              <i class='icon-building'></i>
+            </a>
+            <a class='btn' data-toggle='toolbar-tooltip' href='#' title='Laptop'>
+              <i class='icon-laptop'></i>
+            </a>
+            <a class='btn' data-toggle='toolbar-tooltip' href='#' title='Calendar'>
+              <i class='icon-calendar'></i>
+              <span class='badge'>3</span>
+            </a>
+            <a class='btn' data-toggle='toolbar-tooltip' href='#' title='Lemon'>
+              <i class='icon-lemon'></i>
+            </a>
+          </div>
+        
+        </div>
+      </section>
+      <!-- Content -->
+      <div id='content'>
+        <div class='panel panel-default'>
+          <div class='panel-heading'>
+            Edit Course
+          </div>
+          <div class='panel-body'>
+            <!-- <iframe src="/template/studentform.html" frameborder="0" width="1000"></iframe> -->
+            <form id="fileform" action="#" enctype="multipart/form-data" method="POST">
+                <div class="row col-md-12">
+                  <div class="form-group col-md-2">
+                    <label for="uname">ID</label>
+                  </div>
+                  <div class="form-group col-md-5">
+                      <p><input type="text" class="form-control" name="cid"  placeholder="Enter course ID" value="<%= info.cid%>" readonly ></p>
+                  </div> 
+                </div>
+                 
+                 
+                <div class="row col-md-12">
+                  <div class="form-group col-md-2">
+                    <label for="name">Name</label>
+                  </div>
+                  <div class="form-group col-md-5">
+                    <input type="text" class="form-control" name="name"  placeholder="Enter name" value="<%= info.name%>" >
+                  </div>   
+                </div>
+              
+                <div class="row col-md-12">
+                  <div class="form-group col-md-2">
+                    <label for="grade">DayOfWeek</label>
+                  </div>
+
+                  <div class="form-group col-md-5">
+                    <select id="dayofweek" class="form-control" name="dayofweek" >
+                        <option value="1" >Monday</option>
+                        <option value="2" >Tuesday</option>
+                        <option value="3" >Wednesday</option>
+                        <option value="4" >Thursday</option>
+                        <option value="5" >Friday</option>
+                      </select>
+                  </div>  
+                </div>
+
+                <div class="row col-md-12">
+                    <div class="form-group col-md-2">
+                      <label for="pwd">Number</label>
+                    </div>
+                    <div class="form-group col-md-5">
+                      <input type="number" class="form-control" name="number"  placeholder="Enter max number of students" value="<%= info.number%>">
+                    </div>   
+                </div>
+              
+                <div class="row col-md-12">
+                  <div class="form-group col-md-2">
+                    <label for="grade">Allow Grade</label>
+                  </div>
+                  <div class="form-group col-md-10 form-check">
+                    <div class="form-check form-check-inline col-md-2">           
+                      <label class="form-check-label" for="yearone">
+                        <input class="form-check-input" type="checkbox" name="allow" id="yearone" value="1"  >
+                          Year One
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline col-md-2">
+                      <label class="form-check-label" for="yeartwo">
+                        <input class="form-check-input" type="checkbox" name="allow" id="yeartwo" value="2"  >
+                        Year Two
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline col-md-2">  
+                      <label class="form-check-label" for="yearthree">
+                        <input class="form-check-input" type="checkbox" name="allow" id="yearthree" value="3"  >
+                        Year Three
+                      </label>
+                    </div>
+                  </div>   
+                </div>
+
+                <div class="row col-md-12">
+                  <div class="form-group col-md-2">
+                    <label for="name">Teacher</label>
+                  </div>
+                  <div class="form-group col-md-5">
+                    <input type="text" class="form-control" name="teacher"  placeholder="Enter teacher's name" value="<%= info.teacher%>">
+                  </div>   
+                </div>
+
+                <div class="row col-md-12">
+                  <div class="form-group col-md-2">
+                    <label for="name">Introduction</label>
+                  </div>
+                  <div class="form-group col-md-5">
+                    <textarea class="form-control" rows="3" name="briefintro"  placeholder="Enter introduction"><%= info.briefintro%></textarea>
+                  </div>   
+                </div>
+  
+
+
+                <div class="row col-md-12">
+                  <div class="form-group col-md-2">
+                    
+                  </div>
+                  <div class="form-group col-md-5">
+                    <button type="button" class="btn btn-primary" id="btn" >Submit</button>
+                  </div>
+                </div>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  	<script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      
+      //select dayofweek
+      var dayofweek ='<%= info.dayofweek%>';
+      var obj = $('#dayofweek').get(0);
+      for(var i = 0; i < obj.options.length; i++){
+        var tmp = obj.options[i].value;
+        if(tmp == dayofweek){
+            obj.options[i].selected = 'selected';
+            break;
+        }
+
+      }
+
+      //check all allows
+      var allows='<%= info.allow %>';
+      var grades = $('input:checkbox[name="allow"]');
+      for(var i = 0; i <grades.length; i++){
+        if(allows.indexOf(grades[i].value)>=0){
+          var temp = $('input:checkbox[name="allow"]')[i];
+          $(temp).attr('checked','checked');    
+        }
+      }
+
+
+
+       $("#btn").click(function(){
+
+            var allowgrade = $('input:checkbox[name="allow"]:checked').map(function () {
+                  return $(this).val();
+              }).get().join(",");
+            var cid = $("input[name=cid]").val();
+            $.post("/course/"+cid,{ 
+                name:$("input[name=name]").val(),
+                dayofweek:$("select[name=dayofweek]").val(),
+                number:$("input[name=number]").val(),
+                allow:allowgrade,
+                teacher:$("input[name=teacher]").val(),
+                briefintro:$("textarea[name=briefintro]").val()
+            },function(data){
+                if(data.results==1){
+                    alert("edited ok..");
+                    window.location="/admin/course";
+                }else{
+                    alert("something wrong..");
+                }
+            })
+      
+        });
+
+       
+    </script>
+  </body>
+</html>
