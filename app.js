@@ -15,7 +15,7 @@ app.use(session({
     secret: 'liuyang',
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 60000 }
+    cookie: { maxAge: 60*1000*20 }
   }));
 
 app.set("view engine","ejs");
@@ -50,7 +50,14 @@ app.delete ("/course/:sid",         adminCourseCtrl.deleteCourse);
 
 app.get ("/login",                  mainCtrl.showLogin);
 app.post ("/login",                 mainCtrl.doLogin);
-app.get ("/",                       mainCtrl.showTable);
+app.get ("/",                       mainCtrl.showIndex);
+app.get ("/logout",                 mainCtrl.doLogout);
+app.get ("/changepwd",              mainCtrl.showChangepwd);
+app.post ("/changepwd",             mainCtrl.doChangepwd);
+app.get ("/checkStatus",            mainCtrl.checkSubscribe);
+
+
+
 app.use(express.static("public"));
 
 app.use(function(req,res){

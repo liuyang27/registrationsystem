@@ -5,7 +5,8 @@ var studentSchema= new mongoose.Schema({
     "name":String,
     "grade":Number,
     "password":String,
-    "initpwd": { type: Boolean,default:true}
+    "initpwd": { type: Boolean,default:true},
+    "mycourses":[Number]
 });
 
 studentSchema.statics.importStudent=function(workSheetsFile){

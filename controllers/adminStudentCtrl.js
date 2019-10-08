@@ -58,6 +58,10 @@ exports.doAdminStudentImport=function(req,res){
 }
 
 exports.getAllStudents=function(req,res){
+    if(req.session.login!=true){
+        res.redirect("/login");
+        return;
+    }
 	Student.find({},function(err,results){
 		res.json({"results":results});
 	})

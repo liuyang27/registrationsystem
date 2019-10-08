@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html class='no-js' lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+    <title>changepwd</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+
+        <ul class="nav nav-tabs">
+            <li>
+                <span class="navbar-brand mb-0 h1">Registration System</span>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/">My Courses</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link  active" href="/changepwd">Change Password</a>
+            </li> 
+        </ul>
+        <ul class="nav nav-tabs">
+            <li><a>Welcome,<%= name %>(<%= sid %>) </a></li>
+            <li><a href="/logout"> Logout</a></li>
+        </ul>
+    </nav>   
+    
+    <h1>Change Password</h1>
+    <hr> 
+    <div class="container">
+        <div class="row">  
+            <% if(showtip){ %>
+                <div class="alert alert-danger col-lg-12">
+                    System detected user login with initial password, please change the password to use our system.
+                </div>
+            <% } %>
+            <div class="col-lg-6">
+                <p>New password:</p>
+                <p>
+                    <input type="password" class="form-control" id="pwd1">
+                </p>
+                <p>Repeat password:</p>
+                <p>
+                    <input type="password" class="form-control" id="pwd2">
+                </p>
+                <p>
+                    <input type="button" value="Change Password" class="btn btn-success" id="btn">
+                </p>
+            </div>
+        </div>
+    
+    </div>
+
+
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+       $("#btn").click(function(){
+           if($('#pwd1').val() != $('#pwd2').val()){
+               alert("password must be same.");
+               return;
+           }
+           $.post("/changepwd",{
+               "pwd":$('#pwd1').val()
+           },function(data){
+               if(data.results==1){
+                   alert("password changed.please login with new password.");
+                   window.location="/logout";
+               }else{
+                alert("error...");
+               }
+           })
+       })
+    </script>
+</body>
+</html>
