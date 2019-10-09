@@ -7,7 +7,8 @@ var courseSchema= new mongoose.Schema({
     "number"    :Number,
     "allow"     :[String],
     "teacher"   :String,
-    "briefintro":String
+	"briefintro":String,
+	"mystudents":[String]
 });
 
 courseSchema.statics.checkSid=function(cid,callback){
@@ -17,7 +18,7 @@ courseSchema.statics.checkSid=function(cid,callback){
 }
 
 courseSchema.statics.addCourse=function(json,callback){
-	
+	console.log(json);
 	Course.checkSid(json.sid,function(torf){
 		if(torf){
 			var s = new Course(json);

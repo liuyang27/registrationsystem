@@ -55,8 +55,8 @@ app.get ("/logout",                 mainCtrl.doLogout);
 app.get ("/changepwd",              mainCtrl.showChangepwd);
 app.post ("/changepwd",             mainCtrl.doChangepwd);
 app.get ("/checkStatus",            mainCtrl.checkSubscribe);
-
-
+app.post("/register",               mainCtrl.register);
+app.post("/unregister",             mainCtrl.unregister);
 
 app.use(express.static("public"));
 

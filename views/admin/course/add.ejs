@@ -148,16 +148,26 @@
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript">
        $("#btn").click(function(){
-            var allowgrade = $('input:checkbox[name="allow"]:checked').map(function () {
-                    return $(this).val();
-                }).get().join(",");
+            // var allowgrade = $('input:checkbox[name="allow"]:checked').map(function () {
+            //         return $(this).val();
+            //     }).get().join(",");
+            var allowgrade =(function(){
+              var arr=[];
+              $('input:checkbox[name="allow"]:checked').each(function(){
+                arr.push($(this).val());
+              });
+              console.log(arr);
+              return arr;
+            })();
 
+            jQuery.ajaxSettings.traditional = true;
             $.post("/course/add",{ 
                 cid: $("input[name=cid]").val(),
                 name:$("input[name=name]").val(),
                 dayofweek:$("select[name=dayofweek]").val(),
                 number:$("input[name=number]").val(),
-                allow:allowgrade,
+                "allow":allowgrade,
+                "string":[1,2,3],
                 teacher:$("input[name=teacher]").val(),
                 briefintro:$("textarea[name=briefintro]").val()
             },function(data){

@@ -180,11 +180,20 @@
 
 
        $("#btn").click(function(){
+            var allowgrade =(function(){
+                  var arr=[];
+                  $('input:checkbox[name="allow"]:checked').each(function(){
+                    arr.push($(this).val());
+                  });
+                  console.log(arr);
+                  return arr;
+                })();
 
-            var allowgrade = $('input:checkbox[name="allow"]:checked').map(function () {
-                  return $(this).val();
-              }).get().join(",");
+            // var allowgrade = $('input:checkbox[name="allow"]:checked').map(function () {
+            //       return $(this).val();
+            //   }).get().join(",");
             var cid = $("input[name=cid]").val();
+            jQuery.ajaxSettings.traditional = true;
             $.post("/course/"+cid,{ 
                 name:$("input[name=name]").val(),
                 dayofweek:$("select[name=dayofweek]").val(),

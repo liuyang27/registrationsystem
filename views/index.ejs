@@ -8,6 +8,12 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
     <link href="/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .btn[disabled]{
+            cursor: not-allowed;
+            pointer-events: auto;
+        }
+    </style>
 </head>
 <body>
  
@@ -27,7 +33,7 @@
         </li> 
       </ul>
       <ul  class="nav nav-tabs ">
-        <li><a>Welcome,<%= name %>(<%= sid %>) </a></li>
+        <li><a>Welcome,<%= name %>(<%= sid %>, Year <%= grade %> student) </a></li>
         <li><a href="/logout"> Logout</a></li>
       </ul>     
   </nav>
@@ -40,7 +46,7 @@
               <th>Name</th>
               <th>DayOfWeek</th>    
               <th>Number</th>  
-              <th>Allow</th> 
+              <th>Allow Years</th> 
               <th>Teacher</th> 
               <th>Introduction</th> 
               <th></th>
@@ -60,29 +66,72 @@
     <script type="text/javascript">
       
        $(document).ready(function() {
-            var day_arr=["Monday","Tuesday","Wednesday","Thursday","Friday"];
+            var day_arr=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday"];
 
             $('#table').DataTable({ 
                 columns: [
                 { data: 'cid' },
                 { data: 'name' },
-                { data: 'dayofweek' },
+                // { data: 'dayofweek' },
+                { data: null,"render":function(data,type,row,meta){ 
+                    var s = data.dayofweek;
+                    return day_arr[s];
+                }},
                 { data: 'number' },
                 { data: 'allow' },
                 { data: 'teacher' },
                 { data: 'briefintro' },
                 { data: null,"render":function(data,type,row,meta){
-                  var html="<input type='button' class='btn btn-primary' value='Subscribe' onclick='location=\"../course/"+row.cid+ "\"'/>";
-                  html += " <input type='button' class='btn btn-danger'  data-sid=" + row.cid + " value='Delete' id='deletebtn' />"
+                  var html="<input type='button' class='btn btn-secondary' disabled data-cid="+data.cid+" id='btn_"+data.cid+"'>";
                   return html;
                 }}
               ],
-              ajax: {
+            ajax: {
                 "url":'/course',
-                "dataSrc": "results"
-     
-              }
-          });
+                "dataSrc": "results",
+                }
+            });
+
+            $.ajax({
+                "url":'/checkStatus',
+                "type":'get',      
+                success:function(d){
+                   for(var key in d){
+                       $('#btn_'+key).val(d[key]);
+                       if(d[key]=="Register"){
+                        $('#btn_'+key).addClass("btn-success");
+                        $('#btn_'+key).removeAttr("disabled");
+                       }else if(d[key]=="Already Registed"){
+                        $('#btn_'+key).after("<p><a href='javascript:void(0);' class='unregisterlink' data-role='unregister' data-cid="+key+">Unregister</a></p>")
+                       }
+                   } 
+                }
+            });
+
+            $('#table').delegate(".btn","click",function(){
+                //alert($(this).attr("data-cid"));
+                $.post("/register",{
+                    "cid":$(this).attr("data-cid")
+                },function(data){
+                    if(data.result==1){
+                        alert("registered successful!");
+                        window.location.reload();
+                    }
+                })
+            });
+
+            $('#table').delegate(".unregisterlink","click",function(){
+                 //alert($(this).attr("data-cid"));
+                 $.post("/unregister",{
+                     "cid":$(this).attr("data-cid")
+                 },function(data){
+                     if(data.result==1){
+                         alert("unregistered successful!");
+                         window.location.reload();
+                     }
+                 })
+             });
+
         });
     </script>
 </body>

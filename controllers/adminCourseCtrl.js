@@ -62,9 +62,26 @@ exports.doAdminCourseImport=function(req,res){
     });
 }
 
+
+const mydict={
+    "1":"Year One",
+    "2":"Year Two",
+    "3":"Year Three",
+};
 exports.getAllCourse=function(req,res){
 	Course.find({},function(err,results){
-		res.json({"results":results});
+        results = results.map(element =>({
+            "_id" : element._id, 
+            "allow" : element.allow.map(e =>  (e in mydict ) ? mydict[e]: "data err" ) , 
+            "cid" : element.cid, 
+            "name" : element.name, 
+            "dayofweek" : element.dayofweek, 
+            "number" : element.number, 
+            "teacher" : element.teacher, 
+            "briefintro" : element.briefintro, 
+            "__v" : element.__v
+        }) );
+        res.json({"results":results});  
 	})
 }
 
@@ -79,6 +96,7 @@ exports.doCheckId=function(req,res){
 exports.doAddCourse=function(req,res){
 	var form = new formidable.IncomingForm();
 	form.parse(req, function(err, fields, files) {
+        console.log(fields);
 		Course.addCourse(fields,function(results){
 			res.json({"results":results});
 		});	
