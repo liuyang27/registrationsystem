@@ -53,6 +53,7 @@ exports.doAdminCourseImport=function(req,res){
                 Course.insertMany(dataobj.courses,function(err,r){
                     if(err){
                         res.send("upload error..");
+                        res.send(err);
                         return;
                     }
                     res.send("upload "+ r.length +" records successful.");
